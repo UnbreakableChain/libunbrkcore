@@ -22,6 +22,12 @@ typedef struct {
 } UbLinkDatePair;
 
 
+/*
+ * @brief Structure to provide iteration support
+ */
+typedef UbLinkDatePair UbChainIterator;
+
+
 /**
  * @brief A struct representing a chain of UbLinks
  */
@@ -29,6 +35,7 @@ typedef struct UbChain{
 	char* name; ///< Chain name
 	UbLinkDatePair* links; ///< Hash table where the links are stored
 } UbChain;
+
 
 
 /**
@@ -88,3 +95,15 @@ UbChain* merge_UbChain_v(UbChain* chains[], char* name);
  *@brief An easy way to call merge_UbChain_v using variadic arguments 
  */
 #define merge_UbChain(chain_list, name) merge_UbChain_v(make_UbChain_list chain_list, name)
+
+/**
+ * @brief Initialice the iterator with the first element of the chain.
+ * If the chain is empty iter will be NULL
+ */
+void UbChain_iter_first(UbChain* chain, UbChainIterator** iter);
+
+/**
+ * @brief Fills iter with the next iterator
+ * If there are not more elements in the chain iter will be NULL
+ */
+void UbChain_iter_next(UbChainIterator** iter);

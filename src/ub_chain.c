@@ -93,3 +93,13 @@ UbChain* merge_UbChain_v(UbChain* chains[], char* name){
 
 	return c;
 }
+
+
+void UbChain_iter_first(UbChain* chain, UbChainIterator** iter){
+	*iter = chain->links;
+}
+
+
+void UbChain_iter_next(UbChainIterator** iter){
+	*iter = (*iter)->hh.next; 
+}
