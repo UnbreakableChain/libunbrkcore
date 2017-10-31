@@ -16,6 +16,27 @@ void test_UbDate_to_int(){
 }
 
 
+void test_int_to_UbDate(){
+	UbDate date1 = int_to_UbDate(19900301);
+	UbDate date2 = int_to_UbDate(19901210);
+	UbDate date3 = int_to_UbDate(101);
+	UbDate date4 = int_to_UbDate(0);
+
+	g_assert_cmpint(date1.day, ==, 1);
+	g_assert_cmpint(date1.mon, ==, 3);
+	g_assert_cmpint(date1.year, ==, 1990);
+	g_assert_cmpint(date2.day, ==, 10);
+	g_assert_cmpint(date2.mon, ==, 12);
+	g_assert_cmpint(date2.year, ==, 1990);
+	g_assert_cmpint(date3.day, ==, 1);
+	g_assert_cmpint(date3.mon, ==, 1);
+	g_assert_cmpint(date3.year, ==, 0);
+	g_assert_cmpint(date4.day, ==, 0);
+	g_assert_cmpint(date4.mon, ==, 0);
+	g_assert_cmpint(date4.year, ==, 0);
+}
+
+
 void test_UbDate_to_tm(){
 	UbDate ubdate1 = {.day=1, .mon=3, .year=1900};
 	struct tm* tm1 = UbDate_to_tm(ubdate1);
@@ -63,6 +84,7 @@ void test_cmp_UbDate(){
 int main(int argc, char** argv){
 	g_test_init(&argc, &argv, NULL);
 	g_test_add_func("/set1/UbDate to int test", test_UbDate_to_int);
+	g_test_add_func("/set1/int to UbDate test", test_int_to_UbDate);
 	g_test_add_func("/set1/UbDate to tm test", test_UbDate_to_tm);
 	g_test_add_func("/set1/cmp UbDate test", test_cmp_UbDate);
 	return g_test_run();

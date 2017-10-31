@@ -29,6 +29,11 @@ typedef struct {
 uint32_t UbDate_to_int(UbDate date);
 
 /**
+ * @brief Converts an integer with format yyymmdd into an UbDate
+ */
+UbDate int_to_UbDate(uint32_t date);
+
+/**
  * @brief Converts an UbDate into a tm struct.
  * The tm_sec, tm_min and tm_hour fields are set to 0.
  * @param date UbDate to convert

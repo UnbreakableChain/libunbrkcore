@@ -7,6 +7,15 @@ uint32_t UbDate_to_int(UbDate date){
 }
 
 
+UbDate int_to_UbDate(uint32_t date){
+	return (UbDate){
+		.day = date % 100,
+		.mon = (date/100) % 100,
+		.year = date / 10000
+	};	
+}
+
+
 struct tm* UbDate_to_tm(UbDate date){
 	struct tm* tm = malloc(sizeof(struct tm));
 	tm->tm_mday = date.day;
