@@ -61,12 +61,31 @@ UbChain* copy_UbChain(const UbChain* chain);
 void free_UbChain(UbChain* chain);
 
 /**
- * @brief Adds or replaces an UbLink in an UbChain  
+ * @brief Adds or replaces an UbLink in an UbChain sorting
+ * the UbLink by date. It takes O(n) so if you want to add several
+ * links at once you should use add_UbLink_unsorted() and
+ * sort_UbChain() at the end.
  * @param chain UbChain in which the UbLink will be added
  * @param link UbLink to add
  * @param date Date of the link
  */
 void add_UbLink(UbChain* chain, UbLink link, UbDate date);
+
+/**
+ * @brief Adds or replaces an UbLink in an UbChain  
+ * @param chain UbChain in which the UbLink will be added
+ * @param link UbLink to add
+ * @param date Date of the link
+ */
+void add_UbLink_unsorted(UbChain* chain, UbLink link, UbDate date);
+
+
+/*
+ * @brief Sort the chain links by date. Takes O(n*log(n))
+ * @param chain UbChain to be sorted
+ */
+void sort_UbChain(UbChain* chain);
+
 
 /**
  * @brief Returns the UbLink bound to a date in a UbChain
@@ -107,3 +126,9 @@ void UbChain_iter_first(UbChain* chain, UbChainIterator** iter);
  * If there are not more elements in the chain iter will be NULL
  */
 void UbChain_iter_next(UbChainIterator** iter);
+
+/**
+ * @brief Fills iter with the previous iterator
+ * If there are not more elements in the chain iter will be NULL
+ */
+void UbChain_iter_prev(UbChainIterator** iter);

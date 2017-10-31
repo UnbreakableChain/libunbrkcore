@@ -42,17 +42,15 @@ void free_UbChain(UbChain* chain){
 }
 
 
-void add_UbLink(UbChain* chain, UbLink link, UbDate date){
-	UbLinkDatePair* link_date_pair;	
+void add_UbLink_unsorted(UbChain* chain, UbLink link, UbDate date){
+	UbLinkDatePair *link_date_pair, *replaced;	
 	
-	uint32_t int_date = UbDate_to_int(date);
-	HASH_FIND_INT(chain->links, &int_date, link_date_pair);
-	if (link_date_pair == NULL){
-		link_date_pair = malloc(sizeof(UbLinkDatePair));
-		link_date_pair->date = int_date;
-		link_date_pair->link = link;
-		HASH_ADD_INT(chain->links, date, link_date_pair);
-	}
+	link_date_pair = malloc(sizeof(UbLinkDatePair));
+	link_date_pair->date = UbDate_to_int(date);
+	link_date_pair->link = link;
+	HASH_REPLACE(hh, chain->links, date, sizeof(link_date_pair->date),
+		     link_date_pair, replaced);
+	if (replaced != NULL) free(replaced);
 }
 
 
@@ -67,6 +65,31 @@ UbLink get_UbLink(const UbChain* chain, UbDate date){
 
 	return link_date_pair->link;
 }
+
+
+int sort_by_date(UbLinkDatePair* ldp1, UbLinkDatePair* ldp2){
+	if (ldp1->date == ldp2->date) return 0;
+	return ldp1->date > ldp2->date ? -1 : 1;
+}
+
+
+void sort_UbChain(UbChain* chain){
+	HASH_SORT(chain->links, sort_by_date);
+}
+
+
+void add_UbLink(UbChain* chain, UbLink link, UbDate date){
+	UbLinkDatePair *link_date_pair, *replaced;	
+	
+	link_date_pair = malloc(sizeof(UbLinkDatePair));
+	link_date_pair->date = UbDate_to_int(date);
+	link_date_pair->link = link;
+	HASH_REPLACE_INORDER(hh, chain->links, date, sizeof(link_date_pair->date),
+		     link_date_pair, replaced, sort_by_date);
+	if (replaced != NULL) free(replaced);
+
+}
+
 
 
 UbChain* merge_UbChain_v(UbChain* chains[], char* name){
@@ -102,4 +125,9 @@ void UbChain_iter_first(UbChain* chain, UbChainIterator** iter){
 
 void UbChain_iter_next(UbChainIterator** iter){
 	*iter = (*iter)->hh.next; 
+}
+
+
+void UbChain_iter_prev(UbChainIterator** iter){
+	*iter = (*iter)->hh.prev; 
 }
