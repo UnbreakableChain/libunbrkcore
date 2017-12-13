@@ -31,8 +31,8 @@ struct tm* UbDate_to_tm(UbDate date){
 UbDate tm_to_UbDate(const struct tm* tm){
 	return (UbDate){
 		.day = tm->tm_mday,
-		.mon = tm->tm_mon,
-		.year = tm->tm_year
+		.mon = tm->tm_mon + 1,
+		.year = tm->tm_year + 1900
 	};
 }
 
