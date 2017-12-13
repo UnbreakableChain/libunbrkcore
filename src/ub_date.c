@@ -28,6 +28,15 @@ struct tm* UbDate_to_tm(UbDate date){
 }
 
 
+UbDate tm_to_UbDate(const struct tm* tm){
+	return (UbDate){
+		.day = tm->tm_mday,
+		.mon = tm->tm_mon,
+		.year = tm->tm_year
+	};
+}
+
+
 int cmp_UbDate(UbDate date1, UbDate date2){
 	uint32_t d1 = UbDate_to_int(date1);
 	uint32_t d2 = UbDate_to_int(date2);

@@ -9,7 +9,6 @@
 #include <time.h>
 
 
-
 /**
  * @brief Struct that represents a date
  * in a straightforward way and little space
@@ -40,6 +39,14 @@ UbDate int_to_UbDate(uint32_t date);
  * @return A tm struct representig the date. It must be freed.
  */
 struct tm* UbDate_to_tm(UbDate date);
+
+/**
+ * @brief Converts a tm struct into an UbDate.
+ * @param tm tm struct to convert @return A  c representig the date. It must be freed.
+ * @return An UbDate representig the date.
+ */
+UbDate tm_to_UbDate(const struct tm* tm);
+
 
 /**
  * @brief Compares two dates
