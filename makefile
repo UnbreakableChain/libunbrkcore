@@ -20,14 +20,16 @@ debug: $(BIN)/libunbrkcore.a
 
 # Build library 
 $(BIN)/libunbrkcore.a: $(OBJ)/ub_date.o $(OBJ)/ub_chain.o
+	mkdir -p $(BIN)
 	ar rc $@ $^ 
 
 $(OBJ)/ub_chain.o: $(SRC)/ub_chain.c $(INC)/ub_date.h $(INC)/ub_link.h $(INC)/ut/uthash.h
+	mkdir -p $(OBJ)
 	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<
 
 $(OBJ)/ub_date.o: $(SRC)/ub_date.c $(INC)/ub_date.h
+	mkdir -p $(OBJ)
 	$(CXX) -I$(INC) $(CXXFLAGS) -c -o $@ $<
-
 
 # Clean
 clean:
