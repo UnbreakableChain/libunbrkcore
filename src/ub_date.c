@@ -38,7 +38,11 @@ UbDate tm_to_UbDate(const struct tm* tm){
 
 
 int cmp_UbDate(UbDate date1, UbDate date2){
-	uint32_t d1 = UbDate_to_int(date1);
-	uint32_t d2 = UbDate_to_int(date2);
-	return (d1 > d2) - (d1 < d2);
+	struct tm* tm1 = UbDate_to_tm(date1);
+	struct tm* tm2 = UbDate_to_tm(date2);
+	time_t t1 = mktime(tm1);
+	time_t t2 = mktime(tm2);
+	free(tm1);
+	free(tm2);
+	return (t1 - t2) / (60 * 60 * 24); 
 }

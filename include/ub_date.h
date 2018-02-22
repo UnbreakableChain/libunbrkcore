@@ -50,7 +50,6 @@ UbDate tm_to_UbDate(const struct tm* tm);
 
 /**
  * @brief Compares two dates
- * @return An integer less, equal o greater than 0
- * if date1 is less, equal or greater than date2
+ * @return The difference in days between date1 and date2 (date1-date2), 0 if they are equal. 
  */
 int cmp_UbDate(UbDate date1, UbDate date2);
